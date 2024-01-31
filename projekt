@@ -1,1 +1,83 @@
+import pandas as pd 
+import PySimpleGUI as sg
+import normas
+import easygui
 
+dati=pd.read_csv('dati.csv', encoding = "utf-8")
+
+sg.theme("LightPurple")
+layout = [[sg.T("Ievadi savu vārdu")],
+                  [sg.In(key= '-IN-')],
+                  [sg.Submit(), sg.Cancel()]]
+
+window = sg.Window("Uzzini savus asins analīžu rezultātus", layout)
+
+event, values = window.read()
+window.close()
+
+text_input = values['-IN-']
+sg.popup("You entered", text_input)
+
+# atbilde=(dati[dati.Vārds == text_input])
+if text_input in dati.Vārds.values:
+    atbilde=(dati[dati.Vārds == text_input])
+else:
+    sg.popup("Vārds nav atrasts. Lūdzu dodies uz mūsu klīniku lai nodotu asins analīzes. Ja esat jau nodevis saz")
+
+
+easygui.msgbox(atbilde, title="Asinsanalīžu rezultāti")
+
+MinH = (normas.minHemoglobins)
+MaxH = (normas.maxHemoglobins)
+MinL = (normas.minLimfociti)
+MaxL = (normas.maxLimfociti)
+MinE = (normas.minEritrociti)
+MaxE = (normas.maxEritrociti)
+MinG = (normas.minGlikoze)
+MaxG = (normas.maxGlikoze)
+MinV = (normas.minVitd)
+MaxV = (normas.maxVitd)
+
+
+if int(atbilde["Hemoglobīns"]) < MinH :
+    easygui.msgbox("Tev ir par maz hemoglobīns. " + " Jāieto vairāk dzelzs. Dzelzs ir sastopams produktos, kurus nepieciešams ietvert ikdienas ēdienkartē.Dzelzi satur:aknas, gaļa,sojas produkti, riekstiun sēklas", title = "Hemoglobīns.,")
+
+elif int(atbilde["Hemoglobīns"]) > MaxH :
+    easygui.msgbox("Tev ir par daudz hemoglobīns. " + " Tev ir jādzer vairāk škidrumu", title = "Hemoglobīns")
+else:
+    easygui.msgbox("Tev ir pietiekams hemoglobīns. ", title = "Hemoglobīns")
+
+if int(atbilde["Limfocīti"]) < MinL :
+    easygui.msgbox("Tev ir par maz limfocītu. " + "Noteikti jādodas pie ārsta. Pazemināts limfocīdu daudzums var izraisīt dažādas slimības - no vīrusa infekcijām līdz ļaundabīgiem veidojumiem.", title = "Limfocīti")
+
+elif int(atbilde["Limfocīti"]) > MaxL :
+    easygui.msgbox("Tev ir par daudz limfocītu. " + " Jāiet pie arsta.Paaugstināts limfocītu daudzums arī var liecināt par dažādām vīrusu un baktēriju infekcijām", title = "Limfocīti")
+else:
+    easygui.msgbox("Tev ir normāls limfocītu skaits")
+
+if int(atbilde["Eritrocīti"]) < MinE :
+    easygui.msgbox("Tev ir par maz eritrocītu. " + "Jāiet pie ārsta , jo tas var izraisit gripu un  infekcijās kā hepatīts, tuberkuloze, tīfs vai HIV.", title = "Eritrocīti")
+
+elif int(atbilde["Eritrocīti"]) > MaxE :
+    easygui.msgbox("Tev ir par daudz eritrocītu. " + "Jāiet pie ārsta, nepieciešama papildu izmeklēšana", title = "Eritrocīti")
+
+else:
+    easygui.msgbox("Tev ir normāls eritrocītu skaits")
+
+if int(atbilde["Glikoze"]) < MinG :
+    easygui.msgbox("Tev ir par maz glikozes. " + "Noteikti jādodas pie ārsta, šis var norādīt uz cukura diabētu, aknu slimībām, insulinomu, nieru mazspēju, hipopituitārismu", title = "Glikoze")
+
+elif int(atbilde["Glikoze"]) > MaxG :
+    easygui.msgbox("Tev ir par daudz glikozes. " + "Noteikti jādodas pie ārsta, šis var norādīt uz cukura diabētu, pankreatītu, nieru slimībām un endokrinoloģiskām patoloģijām", title = "Glikoze")
+
+else:
+    easygui.msgbox("Tev ir normāls glikozes daudzums")
+
+if int(atbilde["vitD"]) < MinV :
+    easygui.msgbox("Tev ir par maz D vitamīna. " + "Vairāk jāiet svaigā gaisā, katru dienu pusdienslaikā ir ieteicams vismaz 30 min pastaigāties. Var lietot D vitamīnu kā uztura bagātinātāju, bet vispirms konsultējoties ar ārstu", title = "Vitamīns D")
+
+elif int(atbilde["vitD"]) > MaxV :
+    easygui.msgbox("Tev ir par daudz D vitamīna. " + "Vajag beigt lietot uztura bagātinātājus, kas satur D vitamīnu. Šis var novest pie nopietniem veselības traucējumiem - hiperkalcēmijas, nieru bojājumiem, gremošanas traucējumiem un ilgstoši sliktas pašsajūtas.", title = "Vitamīns D")
+
+else:
+    easygui.msgbox("Tev ir normāls D vitamīna daudzums")
