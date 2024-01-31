@@ -5,6 +5,8 @@ import easygui
 
 dati=pd.read_csv('dati.csv', encoding = "utf-8")
 
+easygui.msgbox("Sveiki, mēs esam asins analīžu laboratorija 444. Mums ir pieejami Jūsu asins analīžu rezultāti. Ja vēlaties uzzināt savus rezultatus spied OK!", title = "Sākums")
+
 sg.theme("LightPurple")
 layout = [[sg.T("Ievadi savu vārdu")],
                   [sg.In(key= '-IN-')],
@@ -18,14 +20,12 @@ window.close()
 text_input = values['-IN-']
 sg.popup("You entered", text_input)
 
-# atbilde=(dati[dati.Vārds == text_input])
 if text_input in dati.Vārds.values:
     atbilde=(dati[dati.Vārds == text_input])
 else:
-    sg.popup("Vārds nav atrasts. Lūdzu dodies uz mūsu klīniku lai nodotu asins analīzes. Ja esat jau nodevis saz")
+    sg.popup("Vārds nav atrasts. Lūdzu, dodies uz mūsu laboratoriju, lai nodotu asins analīzes. Ja esat jau nodevis sazinieties pa telefonu 444-444-444", title="Kļūda")
 
-
-easygui.msgbox(atbilde, title="Asinsanalīžu rezultāti")
+easygui.msgbox(f"{atbilde} \nSpied OK, lai uzzinātu normas un ieteikumus.", title="Asinsanalīžu rezultāti")
 
 MinH = (normas.minHemoglobins)
 MaxH = (normas.maxHemoglobins)
@@ -38,46 +38,47 @@ MaxG = (normas.maxGlikoze)
 MinV = (normas.minVitd)
 MaxV = (normas.maxVitd)
 
-
 if int(atbilde["Hemoglobīns"]) < MinH :
-    easygui.msgbox("Tev ir par maz hemoglobīns. " + " Jāieto vairāk dzelzs. Dzelzs ir sastopams produktos, kurus nepieciešams ietvert ikdienas ēdienkartē.Dzelzi satur:aknas, gaļa,sojas produkti, riekstiun sēklas", title = "Hemoglobīns.,")
+    easygui.msgbox("Tev ir par maz hemoglobīns. " + "Jāieto vairāk dzelzs. Dzelzs ir sastopams produktos, kurus nepieciešams ietvert ikdienas ēdienkartē.Dzelzi satur:aknas, gaļa,sojas produkti, rieksti un sēklas \nSpied OK, lai tiktu tālāk", title = "Hemoglobīns.")
 
 elif int(atbilde["Hemoglobīns"]) > MaxH :
-    easygui.msgbox("Tev ir par daudz hemoglobīns. " + " Tev ir jādzer vairāk škidrumu", title = "Hemoglobīns")
+    easygui.msgbox("Tev ir par daudz hemoglobīns. " + "Tev ir jādzer vairāk škidrums \nSpied OK, lai tiktu tālāk", title = "Hemoglobīns")
 else:
-    easygui.msgbox("Tev ir pietiekams hemoglobīns. ", title = "Hemoglobīns")
+    easygui.msgbox("Tev ir pietiekams hemoglobīns. \nSpied OK, lai tiktu tālāk ", title = "Hemoglobīns")
 
 if int(atbilde["Limfocīti"]) < MinL :
-    easygui.msgbox("Tev ir par maz limfocītu. " + "Noteikti jādodas pie ārsta. Pazemināts limfocīdu daudzums var izraisīt dažādas slimības - no vīrusa infekcijām līdz ļaundabīgiem veidojumiem.", title = "Limfocīti")
+    easygui.msgbox("Tev ir par maz limfocītu. " + "Noteikti jādodas pie ārsta. Pazemināts limfocīdu daudzums var izraisīt dažādas slimības - no vīrusa infekcijām līdz ļaundabīgiem audzējiem. \nSpied OK, lai tiktu tālāk", title = "Limfocīti")
 
 elif int(atbilde["Limfocīti"]) > MaxL :
-    easygui.msgbox("Tev ir par daudz limfocītu. " + " Jāiet pie arsta.Paaugstināts limfocītu daudzums arī var liecināt par dažādām vīrusu un baktēriju infekcijām", title = "Limfocīti")
+    easygui.msgbox("Tev ir par daudz limfocītu. " + "Jāiet pie arsta.Paaugstināts limfocītu daudzums arī var liecināt par dažādām vīrusu un baktēriju infekcijām \nSpied OK, lai tiktu tālāk", title = "Limfocīti")
 else:
-    easygui.msgbox("Tev ir normāls limfocītu skaits")
+    easygui.msgbox("Tev ir normāls limfocītu skaits \nSpied OK, lai tiktu tālāk ", title = "Limfocīti")
 
 if int(atbilde["Eritrocīti"]) < MinE :
-    easygui.msgbox("Tev ir par maz eritrocītu. " + "Jāiet pie ārsta , jo tas var izraisit gripu un  infekcijās kā hepatīts, tuberkuloze, tīfs vai HIV.", title = "Eritrocīti")
+    easygui.msgbox("Tev ir par maz eritrocītu. " + "Jāiet pie ārsta , jo tas var izraisit gripu un  infekcijās kā hepatīts, tuberkuloze, tīfs vai HIV. \nSpied OK, lai tiktu tālāk", title = "Eritrocīti")
 
 elif int(atbilde["Eritrocīti"]) > MaxE :
-    easygui.msgbox("Tev ir par daudz eritrocītu. " + "Jāiet pie ārsta, nepieciešama papildu izmeklēšana", title = "Eritrocīti")
+    easygui.msgbox("Tev ir par daudz eritrocītu. " + "Jāiet pie ārsta, nepieciešama papildu izmeklēšana \nSpied OK, lai tiktu tālāk", title = "Eritrocīti")
 
 else:
-    easygui.msgbox("Tev ir normāls eritrocītu skaits")
+    easygui.msgbox("Tev ir normāls eritrocītu skaits \nSpied OK, lai tiktu tālāk", title = "Eritrocīti")
 
 if int(atbilde["Glikoze"]) < MinG :
-    easygui.msgbox("Tev ir par maz glikozes. " + "Noteikti jādodas pie ārsta, šis var norādīt uz cukura diabētu, aknu slimībām, insulinomu, nieru mazspēju, hipopituitārismu", title = "Glikoze")
+    easygui.msgbox("Tev ir par maz glikozes. " + "Noteikti jādodas pie ārsta, šis var norādīt uz cukura diabētu, aknu slimībām, insulinomu, nieru mazspēju, hipopituitārismu \nSpied OK, lai tiktu tālāk", title = "Glikoze")
 
 elif int(atbilde["Glikoze"]) > MaxG :
-    easygui.msgbox("Tev ir par daudz glikozes. " + "Noteikti jādodas pie ārsta, šis var norādīt uz cukura diabētu, pankreatītu, nieru slimībām un endokrinoloģiskām patoloģijām", title = "Glikoze")
+    easygui.msgbox("Tev ir par daudz glikozes. " + "Noteikti jādodas pie ārsta, šis var norādīt uz cukura diabētu, pankreatītu, nieru slimībām un endokrinoloģiskām patoloģijām \nSpied OK, lai tiktu tālāk", title = "Glikoze")
 
 else:
-    easygui.msgbox("Tev ir normāls glikozes daudzums")
+    easygui.msgbox("Tev ir normāls glikozes daudzums \nSpied OK, lai tiktu tālāk", title ="Glikoze")
 
 if int(atbilde["vitD"]) < MinV :
-    easygui.msgbox("Tev ir par maz D vitamīna. " + "Vairāk jāiet svaigā gaisā, katru dienu pusdienslaikā ir ieteicams vismaz 30 min pastaigāties. Var lietot D vitamīnu kā uztura bagātinātāju, bet vispirms konsultējoties ar ārstu", title = "Vitamīns D")
+    easygui.msgbox("Tev ir par maz D vitamīna. " + "Vairāk jāiet svaigā gaisā, katru dienu pusdienslaikā ir ieteicams vismaz 30 min pastaigāties. Var lietot D vitamīnu kā uztura bagātinātāju, bet vispirms konsultējoties ar ārstu \nSpied OK, lai tiktu tālāk", title = "Vitamīns D")
 
 elif int(atbilde["vitD"]) > MaxV :
-    easygui.msgbox("Tev ir par daudz D vitamīna. " + "Vajag beigt lietot uztura bagātinātājus, kas satur D vitamīnu. Šis var novest pie nopietniem veselības traucējumiem - hiperkalcēmijas, nieru bojājumiem, gremošanas traucējumiem un ilgstoši sliktas pašsajūtas.", title = "Vitamīns D")
+    easygui.msgbox("Tev ir par daudz D vitamīna. " + "Vajag beigt lietot uztura bagātinātājus, kas satur D vitamīnu. Šis var novest pie nopietniem veselības traucējumiem - hiperkalcēmijas, nieru bojājumiem, gremošanas traucējumiem un ilgstoši sliktas pašsajūtas. \nSpied OK, lai tiktu tālāk", title = "Vitamīns D")
 
 else:
-    easygui.msgbox("Tev ir normāls D vitamīna daudzums")
+    easygui.msgbox("Tev ir normāls D vitamīna daudzums \nSpied OK, lai tiktu tālāk", title= "Vitamīns D")
+
+easygui.msgbox("Paldies ka izmantoji asins analīžu laboratorijas 444 pakalpojumus. Gaidīsim jūs atkal!", title = "Beigas")
